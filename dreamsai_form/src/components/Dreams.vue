@@ -16,18 +16,6 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="24">
-          <el-form-item label="Date of Birth" class="postInfo-container-item" prop="birthday">
-            <el-date-picker
-              v-model="postForm.birthday"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="choose date">
-            </el-date-picker>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
         <el-col :span="12">
           <el-form-item label="University" class="postInfo-container-item" prop="university">
             <el-input style="width:350px" v-model="postForm.university"></el-input>
@@ -45,55 +33,54 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="12">
-          <el-form-item label="Start Day of Study" class="postInfo-container-item" prop="studyperiodStart">
-            <el-date-picker
-              v-model="postForm.studyperiodStart"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="choose date">
-            </el-date-picker>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="End Day of Study" class="postInfo-container-item" prop="studyperiodEnd">
-            <el-date-picker
-              v-model="postForm.studyperiodEnd"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="choose date">
-            </el-date-picker>
+        <el-col :span="24">
+          <el-form-item label="Subject" class="postInfo-container-item" prop="subject">
+            <el-input style="width:350px" v-model="postForm.subject"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row>
-        <el-col :span="8">
-          <el-form-item label="Status" prop="status">
-            <el-radio v-model="radio" label="1">Studing</el-radio>
-            <el-radio v-model="radio" label="2">Working</el-radio>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <transition name="fade">
-        <div v-show="radio=='2'">
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="Current Company" class="postInfo-container-item">
-                <el-input style="width:300px" v-model="postForm.currentjobcompany"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="Current Job Title" class="postInfo-container-item">
-                <el-input style="width:300px" v-model="postForm.currentjobtitle"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </div>
-      </transition>
       <el-row>
         <el-col :span="24">
-          <el-form-item label="Expected Job" class="postInfo-container-item" prop="expected">
-            <el-input style="width:350px" v-model="postForm.expected"></el-input>
+          <el-form-item label="Year of Study" class="postInfo-container-item" prop="year">
+            <el-select v-model="postForm.year" placeholder="please select your year">
+              <el-option label="Year 1" value="year1"></el-option>
+              <el-option label="Year 2" value="year2"></el-option>
+              <el-option label="Year 3" value="year3"></el-option>
+              <el-option label="Year 4" value="year4"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <!--      <el-row>-->
+      <!--        <el-col :span="8">-->
+      <!--          <el-form-item label="Status" prop="status">-->
+      <!--            <el-radio v-model="radio" label="1">Studing</el-radio>-->
+      <!--            <el-radio v-model="radio" label="2">Working</el-radio>-->
+      <!--          </el-form-item>-->
+      <!--        </el-col>-->
+      <!--      </el-row>-->
+      <!--      <transition name="fade">-->
+      <!--        <div v-show="radio=='2'">-->
+      <!--          <el-row>-->
+      <!--            <el-col :span="12">-->
+      <!--              <el-form-item label="Current Company" class="postInfo-container-item">-->
+      <!--                <el-input style="width:300px" v-model="postForm.currentjobcompany"></el-input>-->
+      <!--              </el-form-item>-->
+      <!--            </el-col>-->
+      <!--            <el-col :span="12">-->
+      <!--              <el-form-item label="Current Job Title" class="postInfo-container-item">-->
+      <!--                <el-input style="width:300px" v-model="postForm.currentjobtitle"></el-input>-->
+      <!--              </el-form-item>-->
+      <!--            </el-col>-->
+      <!--          </el-row>-->
+      <!--        </div>-->
+      <!--      </transition>-->
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="Preferred Role" class="postInfo-container-item" prop="expected">
+            <el-checkbox-group v-model="expectedcheck">
+              <el-checkbox v-for="expect in expectedlist" :label="expect" :key="expect"></el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
         </el-col>
       </el-row>
@@ -106,11 +93,11 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-form-item prop="textarea" label="Introduction">
+          <el-form-item prop="textarea" label="Comments">
             <el-input
               type="textarea"
               :autosize="{ minRows: 5, maxRows: 20}"
-              placeholder="Please type your Personal brief introduction here"
+              placeholder="Please type your comments here"
               maxlength="1000"
               show-word-limit
               v-model="postForm.textarea">
@@ -129,6 +116,7 @@
 <script>
     import axios from 'axios'
     import qs from 'qs';
+
     export default {
         name: 'HelloWorld',
         data() {
@@ -137,17 +125,18 @@
                 postForm: {
                     lastname: '',
                     firstname: '',
-                    birthday: '',
                     university: '',
-                    studyperiodStart: '',
-                    studyperiodEnd: '',
                     qualification: '',
+                    subject: '',
+                    year: '',
                     expected: '',
                     email: '',
-                    currentjobcompany: '',
-                    currentjobtitle: '',
+                    // currentjobcompany: '',
+                    // currentjobtitle: '',
                     textarea: ''
                 },
+                expectedlist: ["{ML} Model Researcher", "{ML} Model/ Software Developer", "Firefighting Coder", "Front End Developer", "Data Scientist", "Knowledge Engineer", "System Architect", "DevOps Architect"],
+                expectedcheck: [],
                 radio: '1',
                 rules: {
                     lastname: [
@@ -156,17 +145,20 @@
                     firstname: [
                         {required: true, message: 'please enter First Name', trigger: 'blur'}
                     ],
-                    birthday: [
-                        {required: true, message: 'please choose a day', trigger: 'blur'}
-                    ],
                     university: [
                         {required: true, message: 'please enter University', trigger: 'blur'}
                     ],
                     qualification: [
                         {required: true, message: 'please choose qualification', trigger: 'blur'}
                     ],
+                    subject: [
+                        {required: true, message: 'please enter subject', trigger: 'blur'}
+                    ],
+                    year: [
+                        {required: true, message: 'please choose your study year', trigger: 'blur'}
+                    ],
                     expected: [
-                        {required: true, message: 'please enter Expected Job', trigger: 'blur'}
+                        {required: true, message: 'please enter Expected Role', trigger: 'blur'}
                     ],
                     email: [
                         {required: true, message: 'Please enter your E-mail', trigger: 'blur'},
@@ -180,30 +172,33 @@
         },
         methods: {
             submitForm(formName) {
+                for (let i = 0; i < this.expectedcheck.length; i++) {
+                    this.postForm.expected = this.expectedcheck[i]+ ',' +this.postForm.expected
+                }
+                this.postForm.expected =  this.postForm.expected.substring(0, this.postForm.expected.length - 1);
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         let that = this
                         axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-                        axios.post('http://10.11.82.126:80/send_mail',qs.stringify(this.postForm))
+                        axios.post('http://10.11.82.126:80/send_mail', qs.stringify(this.postForm))
                             .then(function (res) {
-                                if(res.data.status === 'success'){
+                                if (res.data.status === 'success') {
                                     that.$alert('Applied Successfully!', 'Thank you!', {
                                         confirmButtonText: 'Confirm',
                                         callback: action => {
                                             that.$message({
                                                 type: 'info',
-                                                message: `action: ${ action }`
+                                                message: `action: ${action}`
                                             });
                                         }
                                     });
-                                }
-                                else{
+                                } else {
                                     that.$alert('Something Wrong Happened!', 'Sorry!', {
                                         confirmButtonText: 'Confirm',
                                         callback: action => {
                                             that.$message({
                                                 type: 'info',
-                                                message: `action: ${ action }`
+                                                message: `action: ${action}`
                                             });
                                         }
                                     });
@@ -215,7 +210,7 @@
                                     callback: action => {
                                         that.$message({
                                             type: 'info',
-                                            message: `action: ${ action }`
+                                            message: `action: ${action}`
                                         });
                                     }
                                 });
@@ -228,7 +223,7 @@
                             callback: action => {
                                 this.$message({
                                     type: 'info',
-                                    message: `action: ${ action }`
+                                    message: `action: ${action}`
                                 });
                             }
                         });
