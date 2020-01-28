@@ -180,7 +180,7 @@
                     if (valid) {
                         let that = this
                         axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-                        axios.post('http://192.168.1.103:8081/send_mail', qs.stringify(this.postForm))
+                        axios.post('http://localhost:8081/send_mail', qs.stringify(this.postForm))
                             .then(function (res) {
                                 if (res.data.status === 'success') {
                                     that.$alert('Applied Successfully!', 'Thank you!', {
