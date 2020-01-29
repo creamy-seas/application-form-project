@@ -93,11 +93,11 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-form-item prop="textarea" label="Comments">
+          <el-form-item prop="textarea" label="A little bit about yourself">
             <el-input
               type="textarea"
               :autosize="{ minRows: 5, maxRows: 20}"
-              placeholder="Please type your comments here"
+              placeholder="Please type something about you here"
               maxlength="1000"
               show-word-limit
               v-model="postForm.textarea">
