@@ -3,7 +3,7 @@ import flask
 from flask_restful import reqparse, Resource
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+import os
 
 class SendEmail(Resource):
     def post(self):
@@ -37,8 +37,8 @@ class SendEmail(Resource):
         gmail_password = 'noreplybot123'
 
         sent_from = gmail_user
-        to = 'fred.yang@dreams-ai.com'
-        subject = 'OMG Super Important Message'
+        to = os.environ['EMAIL']
+        subject = os.environ['SUBJECT']
         # Create message container - the correct MIME type is multipart/alternative.
         msg = MIMEMultipart('alternative')
         msg['Subject'] = subject

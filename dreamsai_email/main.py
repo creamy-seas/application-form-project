@@ -2,6 +2,7 @@ from send_mail import SendEmail
 from flask_cors import CORS
 from flask import Flask, render_template
 from flask_restful import Resource, Api
+import os
 
 app = Flask(__name__,
             static_folder = "./dist/static",
@@ -16,4 +17,4 @@ CORS(app)
 api.add_resource(SendEmail, '/send_mail')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8081, debug=True)
+    app.run(host='0.0.0.0', port=os.environ['PORT'])
